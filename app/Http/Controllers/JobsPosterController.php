@@ -28,7 +28,7 @@ class JobsPosterController extends Controller
                 'job_title' => 'required|min:5|max:30|',
                 'company_location' => 'required|min:5|max:50|',
                 'job_type' => 'required|min:2|max:20',
-                'company_name' => 'required|min:5|max:30',
+                'company_name' => 'required|min:3|max:30',
                 'contact_name' => 'required|min:2|max:20',
                 'contact_email' => 'required',
                 'company_address' => 'required',
@@ -65,7 +65,7 @@ class JobsPosterController extends Controller
         // Above code, use to get the whole info by id
         if ($role[0]['role'] == 'Admine') {
             $job->save();
-            return response()->json(['msg' => 'Admine have stored job successfully']);
+            return response()->json(['msg' => 'job posted']);
         } else {
             $ticketID = app('App\Http\Controllers\FeatureTicketController')->show($request->user_id);
             $checkCharge = app('App\Http\Controllers\FeatureTicketController')
@@ -74,10 +74,11 @@ class JobsPosterController extends Controller
                 );
             if ($checkCharge == 'Job posted') {
                 $job->save();
+                return response()->json(['msg' => 'job posted']);
             }
-            return $checkCharge;
+            return response()->json(['msg' => $checkCharge]);
 
-            // return response()->json(['msg' => 'User have stored job successfully']);
+
         }
     }
 
@@ -95,7 +96,7 @@ class JobsPosterController extends Controller
                 'job_title' => 'required|min:5|max:30|',
                 'company_location' => 'required|min:5|max:50|',
                 'job_type' => 'required|min:2|max:20',
-                'company_name' => 'required|min:5|max:30',
+                'company_name' => 'required|min:3|max:30',
                 'contact_name' => 'required|min:2|max:20',
                 'contact_email' => 'required',
                 'company_address' => 'required',

@@ -38,7 +38,7 @@ class FeatureTicketController extends Controller
             DB::update('UPDATE feature_tickets set charges =' . $minusCharge . ' where id=' . $id);
             return 'Job posted';
         }
-        return "You have used all your charges";
+        return "You have used all your charges. You can post job again at " . date('Y M D', strtotime($featurePlan->restoreChrage_at));
     }
 
     public function show($id)

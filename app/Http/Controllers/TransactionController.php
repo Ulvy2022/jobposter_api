@@ -66,7 +66,7 @@ class TransactionController extends Controller
     {
         $transaction = Transaction::all();
         if ($transaction->isEmpty()) {
-            return "tran-id-" . 69;
+            return "tran-id-" . 70;
         }
         $transaction = Transaction::orderBy('id', 'desc')->first();
         $tran_id = "tran-id-" . $transaction->id += 1;
