@@ -105,10 +105,16 @@ class FeatureTicketController extends Controller
 
     public function userSubInfo($sub_id)
     {
-        return DB::select("SELECT * FROM subscriptions
-                                    inner  join plans on plans.id = subscriptions.plan_id and subscriptions.subscriber_id=$sub_id
-                                    inner join feature_plan on feature_plan.plan_id = plans.id
-                                    inner join features on features.id = feature_Plan.feature_id
-                                    ");
+        return DB::select("SELECT DISTINCT subscriptions.*,
+                    plans.id,
+                    features.postpaid,
+                    features.name,
+                    feature_plan.plan_id,
+                    feature_plan.feature_id,
+                    feature_plan.charges
+                    FROM subscriptions
+                    inner  join plans on plans.id = subscriptions.plan_id and subscriptions.subscriber_id=$sub_id
+                    inner join feature_plan on feature_plan.plan_id = plans.id
+                    inner join features on features.id = feature_Plan.feature_id ORDER BY feature_plan.id DESC");
     }
 }

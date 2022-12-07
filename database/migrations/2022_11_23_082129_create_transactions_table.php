@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->increments('id')->startingValue(31);
+            $table->increments('id')->startingValue(70);
             $table->foreignId('user_id')->constrained()->onDelete("CASCADE");
             $table->string('payment_option');
             $table->string('hash');
