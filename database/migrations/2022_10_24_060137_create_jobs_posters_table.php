@@ -22,7 +22,7 @@ return new class extends Migration {
                 $table->string('job_type');
                 $table->string('job_closedate')->nullable();
                 $table->string('company_name');
-                $table->boolean('status')->default(0);
+                $table->boolean('status')->default(1);
                 $table->integer('salary')->nullable();
                 $table->string('contact_name');
                 $table->string('contact_email');

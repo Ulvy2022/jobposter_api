@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 use stdClass;
 
 
@@ -182,19 +183,24 @@ class UserController extends Controller
     public function updateImg(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        if ($request->img != null) {
-            $path = public_path('images');
-            if (!file_exists($path)) {
-                mkdir($path, 0777, true);
-            }
-            $file = $request->file('img');
-            $fileName = uniqid() . '_' . trim($file->getClientOriginalName());
-            $file->move($path, $fileName);
-            $user->img = asset('images/' . $fileName);
+        if ($request->hasFile('img')) {
+            $path = $request->file('img')->store('images', 's3');
+            Image::make($request->file('img'))->resize(250, 250);
+            $user->img = Storage::disk('s3')->url($path);
             $user->update();
+            return response()->json(['msg' => $user->img]);
         }
-        return response()->json(['msg' => 'ing updated']);
+        return response()->json(['msg' => 'failed']);
+
     }
+
+    public function getUserImg($user_id)
+    {
+        $user = User::findOrFail($user_id);
+        return Storage::disk("s3")->response('images/' . $user->img);
+    }
+
+
 
 
     public function changePassword(Request $request, $id)

@@ -15,6 +15,11 @@ class JobsPoster extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function cv()
+    {
+        return $this->hasMany(UserCv::class);
+    }
+
     protected $fillable = [
         'job_title',
         'company_location',

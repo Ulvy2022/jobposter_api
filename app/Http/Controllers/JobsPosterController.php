@@ -153,6 +153,18 @@ class JobsPosterController extends Controller
         }
     }
 
+    public function closeJob($id)
+    {
+        $job = JobsPoster::findOrFail($id);
+        if ($job) {
+            $job->job_closedate = date("Ymdhis");
+            $job->status = 0;
+            $job->update();
+            return response()->json(['msg' => 'job closed']);
+        }
+        return response()->json(['msg' => 'job not found']);
+    }
+
     public function getSpecificJobs($id)
     {
         return JobsPoster::where('id', $id)->get();

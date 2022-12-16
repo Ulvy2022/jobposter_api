@@ -13,6 +13,7 @@ use App\Http\Controllers\PlaneController;
 use App\Http\Controllers\RestorePostController;
 use App\Http\Controllers\SubRenewalsController;
 use App\Http\Controllers\JobsPosterController;
+use App\Http\Controllers\UserCvController;
 
 // Api on user: by id, gender,count
 // Api on job: by id, title, job-type, count,
@@ -44,13 +45,16 @@ Route::apiResource('/payment', TransactionController::class);
 // user plane
 Route::apiResource('/plane', PlaneController::class);
 
+//get user img
+Route::get("getUserImg/{id}", [UserController::class, 'getUserImg']);
+
 
 Route::apiResource('/tickets', FeatureTicketController::class);
 Route::get('/userSubInfo/{sub_id}', [FeatureTicketController::class, 'userSubInfo']);
 Route::apiResource('/restorePost', RestorePostController::class);
 
-Route::get('/restoreCharge', [PlaneController::class, 'restoreCharge']);
-Route::post('/setSubToExpired', [SubscribeController::class, 'setSubToExpired']);
+Route::get('/restoreCharge', [FeatureTicketController::class, 'restoreCharge']);
+Route::put('/setSubToExpired', [SubscribeController::class, 'setSubToExpired']);
 
 // get all not expire jobs
 Route::get('/setJobToExpired', [JobsPosterController::class, 'setJobToExpired']);
@@ -89,7 +93,8 @@ Route::post('/logout', [LoginController::class, 'logout']);
 //get all balance transfer history
 Route::get("/paymentHistory", [PaymentController::class, 'getAllBalanceTransfer']);
 
-
+// CV
+Route::apiResource("/cv", UserCvController::class);
 
 // Job
 Route::apiResource('/jobposter', JobsPosterController::class);
@@ -117,3 +122,6 @@ Route::post("/QRcode", [TransactionController::class, 'QRcode']);
 
 // get only active status only
 Route::get("current_scubscribe/{id}", [SubscribeController::class, 'user_current_scubscribe']);
+
+// close job
+Route::put("/closeJob/{id}", [JobsPosterController::class, 'closeJob']);

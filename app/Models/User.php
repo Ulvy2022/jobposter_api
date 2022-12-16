@@ -32,6 +32,13 @@ class User extends Model
         return $this->hasMany(Transaction::class);
     }
 
+    public function applyCv()
+    {
+        return $this->hasMany(UserCv::class);
+    }
+
+
+
     protected $fillable = [
         'fullName',
         'email',

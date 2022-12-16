@@ -33,6 +33,7 @@ class mailToNotifyUserSub extends Mailable
                     'sub' => $this->sub,
                     'expire' => $this->expire,
                     'email' => $this->email,
+                    'plan' => $this->plan,
                 ]
             );
     }

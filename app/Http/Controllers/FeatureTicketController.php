@@ -18,16 +18,6 @@ class FeatureTicketController extends Controller
     public function index()
     {
         return $this->ToObject(DB::select('SELECT * from users order by id desc '));
-        // $sub = FeatureTicket::where("expired_at", ">=", time() - (24 * 60 * 60))->get();
-        // foreach ($sub as $job) {
-        //     // return date("Y-m-d");
-        //     return date('Y-m-d', strtotime($job['restoreChrage_at']));
-        //     if (date('Y-m-d', strtotime($job['restoreChrage_at'])) == date("Y-m-d")) {
-        //         $charge = FeatureTicket::findOrFail($job['id']);
-        //         $charge->charges = $charge->full_charge;
-        //         $charge->update();
-        //     }
-        // }
     }
 
     public function update($id)
@@ -99,6 +89,7 @@ class FeatureTicketController extends Controller
                 $charge = FeatureTicket::findOrFail($job['id']);
                 $charge->charges = $charge->full_charge;
                 $charge->update();
+                // return $charge;
             }
         }
     }

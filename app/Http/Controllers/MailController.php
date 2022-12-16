@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Mail\sendVerifyCode;
 use App\Mail\setUserToAdmine;
 use App\Mail\mailToNotifyUserSub;
+use App\Mail\sendCV;
 use App\Mail\registerMail;
+use App\Models\JobsPoster;
 use App\Models\User;
+use LucasDotVin\Soulbscription\Models\Plan;
 use Carbon\Carbon;
 use LucasDotVin\Soulbscription\Models\Subscription;
 use Illuminate\Http\Request;
@@ -82,21 +85,34 @@ class MailController extends Controller
 
     public function mailToNotifyUserSub()
     {
-        $date = date("Y-m-d");
-        $allSubscribers = Subscription::where("active", true)->get();
+        $allSubscribers = Subscription::where("active", 1)->get();
         foreach ($allSubscribers as $sub) {
             $user = User::findOrFail($sub['subscriber_id']);
-            if (date('Y-m-d', strtotime($sub['expired_at'])) == date('Y-m-d', strtotime($sub['expired_at']->addDays(-7)))) {
+            if (date('Y-m-d', strtotime($sub['created_at'])) == date('Y-m-d', strtotime($sub->expired_at->addDays(-7)))) {
+                $plan = Plan::findOrFail($sub->plan_id);
                 $body = [
                     'username' => $user['fullName'],
-                    'sub' => $sub['subscribed_at'],
-                    'expire' => $sub['expired_at'],
+                    'sub' => date('D M j Y', strtotime($sub['created_at'])),
+                    'expire' => date('D M j Y', strtotime($sub['expired_at'])),
                     'email' => $user['email'],
+                    'plan' => $plan['name'],
                 ];
-                Mail::to($user['email'])->send(new mailToNotifyUserSub($body));
+                Mail::to($user->email)->send(new mailToNotifyUserSub($body));
 
-                return $user;
+                return date('Y-m-d') . date('Y-m-d', strtotime($sub->expired_at->addDays(-7)));
             }
+            return $sub;
+        }
+    }
+
+    public function sendCv($jobs_poster_id, $email)
+    {
+        $job = JobsPoster::findOrFail($jobs_poster_id)->first();
+        if ($email != null) {
+            Mail::to($email)->send(new sendCV()); //file in Mail folder
+            return response()->json(['message' => 'success']);
+        } else {
+            return response()->json(['message' => 'email not found!']);
         }
     }
 }

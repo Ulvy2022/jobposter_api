@@ -152,7 +152,7 @@ class SubscribeController extends Controller
         $sub_id = Subscription::where("active", 1)->get();
         foreach ($sub_id as $item) {
             $sub_update = Subscription::findOrFail($item['id']);
-            if (date('y-m-d', strtotime($item['expired_at'])) == date('y-m-d', strtotime($item->created_at->addDays(30)))) {
+            if (date('Y-m-d', strtotime($sub_update->expired_at)) == date('Y-m-d')) {
                 $sub_update->active = 0;
                 $sub_update->update();
             }
