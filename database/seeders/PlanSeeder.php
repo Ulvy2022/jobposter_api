@@ -12,37 +12,41 @@ class PlanSeeder extends Seeder
     public function run()
     {
         $trail = Plan::create([
-            'name'             => 'trail',
+            'name' => 'trail',
             'periodicity_type' => PeriodicityType::Month,
-            'periodicity'      => 1,
+            'periodicity' => 1,
+            'benifits' => 'Post 1 job for 15 days'
         ]);
 
         $silver = Plan::create([
-            'name'             => 'silver',
+            'name' => 'silver',
             'periodicity_type' => PeriodicityType::Month,
-            'periodicity'      => 1,
+            'periodicity' => 1,
+            'benifits' => 'Post 3 job for 15 days'
         ]);
 
         $gold = Plan::create([
-            'name'             => 'gold',
+            'name' => 'gold',
             'periodicity_type' => PeriodicityType::Month,
-            'periodicity'      => 3,
-            'grace_days'       => 7,
+            'periodicity' => 3,
+            'grace_days' => 7,
+            'benifits' => 'Post 10 job for 15 days'
         ]);
 
         $diamond = Plan::create([
-            'name'             => 'diamond',
+            'name' => 'diamond',
             'periodicity_type' => PeriodicityType::Month,
-            'periodicity'      => 5,
-            'grace_days'       => 7,
+            'periodicity' => 5,
+            'grace_days' => 7,
+            'benifits' => 'Unlimited Post in 30 days'
         ]);
 
 
 
-        
-        
+
+
         $deployMinutes = Feature::whereName('deploy-minutes')->first();
-        $subdomains    = Feature::whereName('subdomains')->first();
+        $subdomains = Feature::whereName('subdomains')->first();
 
         $silver->features()->attach($deployMinutes, ['charges' => 15]);
 

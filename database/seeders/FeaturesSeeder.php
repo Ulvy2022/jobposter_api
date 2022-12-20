@@ -10,36 +10,36 @@ class FeaturesSeeder extends Seeder
 {
     public function run()
     {
-    
+
         $storage = Feature::create([
-            'consumable' => true,
-            'quota'      => true,//limited amount or number that is officially allowed
-            'name'       => 'trail',
-            'postpaid'       => 0,
+            'consumable' => false,
+            'quota' => true, //limited amount or number that is officially allowed
+            'name' => 'trail',
+            'postpaid' => 0,
         ]);
-        
+
         $deployMinutes = Feature::create([
-            'consumable'       => false,
-            'name'             => 'silver',//name of feature
+            'consumable' => true,
+            'name' => 'silver', //name of feature
             'periodicity_type' => PeriodicityType::Month,
-            'postpaid'       => 20,
-            'periodicity'      => 1,
+            'postpaid' => 20,
+            'periodicity' => 1,
         ]);
 
         $gold = Feature::create([
-            'consumable'       => false,
-            'name'             => 'gold',//name of feature
+            'consumable' => true,
+            'name' => 'gold', //name of feature
             'periodicity_type' => PeriodicityType::Month,
-            'periodicity'      => 1,
-            'postpaid'       => 35,
+            'periodicity' => 1,
+            'postpaid' => 35,
         ]);
 
         $customDomain = Feature::create([
-            'consumable' => false,
-            'name'       => 'diamond',
+            'consumable' => true,
+            'name' => 'diamond',
             'periodicity_type' => PeriodicityType::Month,
-            'postpaid'       => 50,
+            'postpaid' => 50,
         ]);
-       
+
     }
 }

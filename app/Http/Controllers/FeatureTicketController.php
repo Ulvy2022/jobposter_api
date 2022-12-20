@@ -60,7 +60,7 @@ class FeatureTicketController extends Controller
         $featurePlan->full_charge = $charges;
         $featurePlan->feature_id = $feature_id;
         $featurePlan->expired_at = Carbon::now()->addMonth();
-        $featurePlan->subscriber_type = $subscriber_type;
+        $featurePlan->subscriber_type = "App\Models\Users";
         $featurePlan->subscriber_id = $subscriber_id;
 
         $chrageName = app('App\Http\Controllers\FeaturesController')

@@ -87,29 +87,30 @@ class SubscribeController extends Controller
     {
         $student = User::find($request->subscriber_id);
         $plan = Plan::find($request->plan_id);
-        $student->subscribeTo($plan, expiration: today()->addMonth(), startDate: null);
-        $student->subscription = $plan['name'];
-        $student->update();
-        $this->deActiveSub($request->subscriber_id);
-        $feature_id = app('App\Http\Controllers\FeaturesController')->getFeatureId($plan['name']);
-        $plan_id = app('App\Http\Controllers\PlaneController')->getPlanId($plan['name']);
+        if ($this->get_user_trail($request->subscriber_id) == 0) {
+            $student->subscribeTo($plan, expiration: today()->addMonth(), startDate: null);
+            $student->subscription = $plan['name'];
+            $student->ifTrail = 1;
+            $student->update();
+            $this->deActiveSub($request->subscriber_id);
+            $feature_id = app('App\Http\Controllers\FeaturesController')->getFeatureId($plan['name']);
+            $plan_id = app('App\Http\Controllers\PlaneController')->getPlanId($plan['name']);
+            $charge = app('App\Http\Controllers\FeaturesController')->getChargeByName($plan['name']);
+            app('App\Http\Controllers\FeaturePlanController')->store($feature_id, $plan_id, $charge);
+            $subscriber_id = Subscription::where("subscriber_id", $request->subscriber_id)
+                ->where('was_switched', 1)->first();
+            $featurePlan = FeaturePlan::where('feature_id', $feature_id)->orderBy('id')->get()->first();
+            $charges = Plan::findOrFail($featurePlan['plan_id']);
+            app('App\Http\Controllers\FeatureTicketController')
+                ->store(
+                    $charges['periodicity'],
+                    $featurePlan['id'],
+                    $subscriber_id['subscriber_id'],
+                    $charges['name'],
+                );
 
-        $charge = app('App\Http\Controllers\FeaturesController')->getChargeByName($plan['name']);
-
-        app('App\Http\Controllers\FeaturePlanController')->store($feature_id, $plan_id, $charge);
-        $subscriber_id = Subscription::where("subscriber_id", $request->subscriber_id)
-            ->where('was_switched', 1)->first();
-        $featurePlan = FeaturePlan::where('feature_id', $feature_id)->orderBy('id')->get()->first();
-        $charges = Plan::findOrFail($featurePlan['plan_id']);
-        app('App\Http\Controllers\FeatureTicketController')
-            ->store(
-                $charges['periodicity'],
-                $featurePlan['id'],
-                $subscriber_id['subscriber_id'],
-                $charges['name'],
-            );
-
-        return response()->json(['msg' => 'subscribe successful']);
+            return response()->json(['msg' => 'subscribe successful']);
+        }
 
     }
 
@@ -189,6 +190,12 @@ class SubscribeController extends Controller
             return $current_sub[0]->active;
         }
         return 0;
+    }
+
+    public function get_user_trail($id)
+    {
+        $trail = User::findOrFail($id);
+        return $trail->ifTrail;
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use LucasDotVin\Soulbscription\Enums\PeriodicityType;
 use LucasDotVin\Soulbscription\Models\Plan;
 use LucasDotVin\Soulbscription\Models\Subscription;
 use App\Models\User;
@@ -83,6 +84,29 @@ class PlaneController extends Controller
     {
         $plan = Plan::where("id", $id)->get();
         return $plan[0]['name'];
+    }
+
+    public function createNewPlan(Request $request)
+    {
+        $new_plan = new Plan();
+        $new_plan->grace_days = $request->grace_days;
+        $new_plan->name = $request->name;
+        $new_plan->benifits = $request->benifits;
+        $new_plan->periodicity = $request->periodicity;
+        $new_plan->periodicity_type = PeriodicityType::Month;
+        $new_plan->save();
+
+        $charges = $request->charges;
+        app('App\Http\Controllers\FeaturesController')->store($request);
+        $feature_id = app('App\Http\Controllers\FeaturesController')->getFeatureId($request->name);
+        $plan_id = $this->getPlanId($request->name);
+        app('App\Http\Controllers\FeaturePlanController')->store($feature_id, $plan_id, $charges);
+        return response()->json(['msg' => 'plan created']);
+    }
+
+    public function getPlanBenifits()
+    {
+        return Plan::all('benifits')->where('benifits', '!=', null);
     }
 
 
