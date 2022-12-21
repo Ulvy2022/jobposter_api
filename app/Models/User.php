@@ -37,14 +37,12 @@ class User extends Model
         return $this->hasMany(UserCv::class);
     }
 
-
-
     protected $fillable = [
         'fullName',
         'email',
         'password',
         'gender',
-        'role',
+        'role'
     ];
     public $timestamps = false;
 

@@ -200,9 +200,6 @@ class UserController extends Controller
         return Storage::disk("s3")->response('images/' . $user->img);
     }
 
-
-
-
     public function changePassword(Request $request, $id)
     {
         $user = User::find($id);
@@ -220,5 +217,13 @@ class UserController extends Controller
     public function getUserJob($id)
     {
         return User::with(['Jobsposter'])->where('id', $id)->get();
+    }
+
+    public function verifyEmail($id)
+    {
+        $user = User::findOrFail($id);
+        $user->verified = true;
+        $user->update();
+        return response()->json(['mes'=>'Email have been verified']);
     }
 }
