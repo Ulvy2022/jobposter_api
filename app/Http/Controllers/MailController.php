@@ -69,10 +69,13 @@ class MailController extends Controller
         $user = User::where('email', $email)->first();
         $username = $user['fullName'];
         $email = $user['email'];
+        $id = $user['id'];
+        $url = "http://localhost:8080/$id";
 
         $body = [
             'username' => $username,
-            'email' => $email
+            'email' => $email,
+            'url' => $url
         ];
 
         if ($user) {

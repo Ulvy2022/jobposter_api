@@ -13,18 +13,19 @@ class registerMail extends Mailable
 
     public function __construct($body)
     {
-        foreach ($body as $content => $message){
+        foreach ($body as $content => $message) {
             $this->$content = $message;
         }
     }
 
-    
+
     public function build()
     {
         return $this->from("slmspnc519@gmail.com")->subject("Registeration")->view('registerUserToClient')
-        ->with([
-            'username'=>$this->username,
-            'email'=>$this->email,
-        ]);
+            ->with([
+                'username' => $this->username,
+                'email' => $this->email,
+                'url' => $this->url,
+            ]);
     }
 }

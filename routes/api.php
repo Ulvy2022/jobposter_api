@@ -123,7 +123,7 @@ Route::post("/QRcode", [TransactionController::class, 'QRcode']);
 // get only active status only
 Route::get("current_scubscribe/{id}", [SubscribeController::class, 'user_current_scubscribe']);
 
-// close job 
+// close job
 Route::put("/closeJob/{id}", [JobsPosterController::class, 'closeJob']);
 
 // creae new plane
