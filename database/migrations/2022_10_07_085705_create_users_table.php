@@ -20,10 +20,10 @@ return new class extends Migration {
                 $table->string('password');
                 $table->string('role')->default('user');
                 $table->string('verify_code')->nullable();
-                $table->boolean('verified')->default(0);
                 $table->string('img')->nullable();
                 $table->string('subscription')->nullable();
                 $table->string('created_at')->nullable();
+                $table->string('verified_at')->nullable();
                 $table->string('updated_at')->nullable();
             }
         );

@@ -222,8 +222,8 @@ class UserController extends Controller
     public function verifyEmail($id)
     {
         $user = User::findOrFail($id);
-        $user->verified = true;
+        $user->verified_at = date("D j M Y");
         $user->update();
-        return response()->json(['mes'=>'Email have been verified']);
+        return response()->json(['mes' => 'Email have been verified']);
     }
 }

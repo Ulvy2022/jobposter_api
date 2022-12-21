@@ -70,7 +70,7 @@ class MailController extends Controller
         $username = $user['fullName'];
         $email = $user['email'];
         $id = $user['id'];
-        $url = "http://localhost:8080/$id";
+        $url = "http://localhost:8080/verifyEmail/$id";
 
         $body = [
             'username' => $username,
