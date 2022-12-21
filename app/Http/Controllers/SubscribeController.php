@@ -97,15 +97,15 @@ class SubscribeController extends Controller
             $plan_id = app('App\Http\Controllers\PlaneController')->getPlanId($plan['name']);
             $charge = app('App\Http\Controllers\FeaturesController')->getChargeByName($plan['name']);
             app('App\Http\Controllers\FeaturePlanController')->store($feature_id, $plan_id, $charge);
-            $subscriber_id = Subscription::where("subscriber_id", $request->subscriber_id)
-                ->where('was_switched', 1)->first();
+            // $subscriber_id = Subscription::where("subscriber_id", $request->subscriber_id)
+            //     ->where('was_switched', 1)->first();
             $featurePlan = FeaturePlan::where('feature_id', $feature_id)->orderBy('id')->get()->first();
             $charges = Plan::findOrFail($featurePlan['plan_id']);
             app('App\Http\Controllers\FeatureTicketController')
                 ->store(
                     $charges['periodicity'],
                     $featurePlan['id'],
-                    $subscriber_id['subscriber_id'],
+                    $request->subscriber_id,
                     $charges['name'],
                 );
 
