@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
         $user = new \App\Models\User();
         $user->fullName = 'user bot';
         $user->role = 'user';
-        $user->email = 'user@gmail.com';
+        $user->email = 'ulvyromy156@gmail.com';
         $user->password = bcrypt('077257676');
         $user->save();
     }
