@@ -69,10 +69,12 @@ class MailController extends Controller
         $user = User::where('email', $email)->first();
         $username = $user['fullName'];
         $email = $user['email'];
+        $id = $user['id'];
 
         $body = [
             'username' => $username,
-            'email' => $email
+            'email' => $email,
+            'id' => $id
         ];
 
         if ($user) {

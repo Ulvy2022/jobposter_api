@@ -29,6 +29,8 @@ Route::post('/registerEmail/{email}', [MailController::class, 'registerEmail']);
 Route::post('/mailToNotifyUserSub', [MailController::class, 'mailToNotifyUserSub']);
 
 Route::apiResource('/user', UserController::class);
+Route::put('/verifyemail/{id}', [UserController::class,'verifyEmail']);
+
 Route::apiResource('/renewal', SubRenewalsController::class);
 
 Route::get('/count', [UserController::class, 'count']);

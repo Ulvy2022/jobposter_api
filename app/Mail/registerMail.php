@@ -25,6 +25,7 @@ class registerMail extends Mailable
         ->with([
             'username'=>$this->username,
             'email'=>$this->email,
+            'id'=>$this->id,
         ]);
     }
 }

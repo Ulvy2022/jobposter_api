@@ -11,5 +11,7 @@
     <p>Congratulation! You have been register successfully</p>
     <p>Your name: <b>{{$username}}</b></p>
     <p>Your email: <b>{{$email}}</b></p>
+    <p>Your Id: {{$email}}</p>
+    <a href="http://localhost:8080/verifyEmail/{{$id}}">Email Verify</a>
 </body>
 </html>
