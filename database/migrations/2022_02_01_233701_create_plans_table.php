@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->integer('grace_days')->default(0);
             $table->string('name');
             $table->unsignedInteger('periodicity');
+            $table->string('benifits');
             $table->string('periodicity_type');
             $table->softDeletes();
             $table->timestamps();

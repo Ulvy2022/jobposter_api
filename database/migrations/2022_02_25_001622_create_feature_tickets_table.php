@@ -15,10 +15,11 @@ return new class() extends Migration {
         Schema::create('feature_tickets', function (Blueprint $table) {
             $table->id();
             $table->decimal('charges')->nullable();
+            $table->decimal('full_charge')->nullable();
             $table->timestamp('expired_at')->nullable();
+            $table->timestamp('restoreChrage_at')->nullable();
             $table->foreignIdFor(\LucasDotVin\Soulbscription\Models\Feature::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
-
             if (config('soulbscription.models.subscriber.uses_uuid')) {
                 $table->uuidMorphs('subscriber');
             } else {
