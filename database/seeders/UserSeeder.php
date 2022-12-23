@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
         $admine = new \App\Models\User();
         $admine->fullName = 'Admine App';
         $admine->role = 'Admine';
+        $admine->verified_at = date('D M j');
         $admine->email = 'admine@gmail.com';
         $admine->password = bcrypt('077257675');
         $admine->save();
@@ -24,6 +25,7 @@ class UserSeeder extends Seeder
         $user = new \App\Models\User();
         $user->fullName = 'user bot';
         $user->role = 'user';
+        $user->verified_at = date('D M j');
         $user->email = 'ulvyromy156@gmail.com';
         $user->password = bcrypt('077257676');
         $user->save();
