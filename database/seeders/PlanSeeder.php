@@ -45,12 +45,12 @@ class PlanSeeder extends Seeder
 
 
 
-        $deployMinutes = Feature::whereName('deploy-minutes')->first();
-        $subdomains = Feature::whereName('subdomains')->first();
+        // $deployMinutes = Feature::whereName('deploy-minutes')->first();
+        // $subdomains = Feature::whereName('subdomains')->first();
 
-        $silver->features()->attach($deployMinutes, ['charges' => 15]);
+        // $silver->features()->attach($deployMinutes, ['charges' => 15]);
 
-        $gold->features()->attach($deployMinutes, ['charges' => 25]);
-        $gold->features()->attach($subdomains);
+        // $gold->features()->attach($deployMinutes, ['charges' => 25]);
+        // $gold->features()->attach($subdomains);
     }
 }
