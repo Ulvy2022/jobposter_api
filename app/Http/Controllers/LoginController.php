@@ -15,8 +15,7 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
         //check password
         if (!$user || !Hash::check($request->password, $user->password) || $user->verified_at == null) {
-            return response()->json(['sms' => "Invaliid password"]);
-            // return !Hash::check($request->password, $user->password);
+            return response()->json(['sms' => "Invalid password"]);
         }
         $token = $user->createToken('myToken')->plainTextToken;
         return response()->json($user, 200);
