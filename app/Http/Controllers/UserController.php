@@ -149,7 +149,7 @@ class UserController extends Controller
 
     public function getUserByEmail($email)
     {
-        return User::where('email', $email)->first();
+        return User::where('email', $email)->get();
     }
 
     public function resetPassword(Request $request, $id)
